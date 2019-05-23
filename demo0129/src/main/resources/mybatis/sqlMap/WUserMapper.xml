@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.WUserMapper">
+
+    <resultMap id="baseMap" type="WUser">
+        <id property="user_id" column="USER_ID"/>
+        <result column="USER_NAME" property="user_name"/>
+        <result column="USER_PWD" property="user_pwd"/>
+    </resultMap>
+    <select id="login" parameterType="com.example.demo.entity.WUser" resultMap="baseMap">
+        select * from user_info
+        <where>
+            user_name=#{user_name} and user_pwd=#{user_pwd}
+        </where>
+    </select>
+
+    <insert id="reg">
+        insert into user_info(user_id,user_name,user_pwd,user_phone,user_email)
+        values(#{user_id},#{user_name},#{user_pwd},#{user_phone},#{user_email})
+    </insert>
+
+    <select id="getByUsername" parameterType="com.example.demo.entity.WUser" resultMap="baseMap">
+        select * from user_info
+        where user_name=#{user_name}
+    </select>
+
+</mapper>

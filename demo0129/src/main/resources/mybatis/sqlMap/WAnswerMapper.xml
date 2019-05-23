@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.WAnswerMapper">
+
+    <resultMap id="baseMap" type="com.example.demo.entity.WAnswer">
+        <id column="ANSWER_ID" property="answer_id"/>
+        <result column="ANSWER" property="answer"/>
+        <result column="ITEM_ID" property="item_id"/>
+    </resultMap>
+
+    <select id="getByItemId" parameterType="com.example.demo.entity.WItem" resultMap="baseMap">
+        select * from answer
+        <where>
+            item_id = #{item_id}
+        </where>
+    </select>
+
+    <insert id="addAnswer" parameterType="com.example.demo.entity.WAnswer" >
+        insert into answer(answer_id,answer,item_id)
+        values(#{answer_id},#{answer},#{item_id})
+    </insert>
+
+
+
+</mapper>
