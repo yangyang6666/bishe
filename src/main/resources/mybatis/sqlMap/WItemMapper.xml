@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.example.demo.mapper.WItemMapper">
+
+    <resultMap id="baseMap" type="com.example.demo.entity.WItem">
+        <id column="ITEM_ID" property="item_id"/>
+        <result column="ITEM_NAME" property="item_name"/>
+        <result column="FORM_ID" property="form_id"/>
+    </resultMap>
+    <select id="getByFormId" parameterType="com.example.demo.entity.WForm" resultMap="baseMap">
+        select * from item
+        <where>
+            form_id = #{form_id}
+        </where>
+    </select>
+
+    <select id="getByItemId" parameterType="com.example.demo.entity.WItem" resultMap="baseMap">
+        select * from item
+        <where>
+            item_id = #{item_id}
+        </where>
+    </select>
+
+
+    <insert id="addItem" parameterType="com.example.demo.entity.WItem" >
+        insert into item(item_id,item_name,form_id)
+        values(#{item_id},#{item_name},#{form_id})
+    </insert>
+
+    <delete id="deleteItemByFormId" parameterType="com.example.demo.entity.WForm" >
+        delete from item
+        where form_id=#{form_id}
+    </delete>
+
+</mapper>

@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Login Page</title>
+    <link type = "text/css" rel="stylesheet" href="css/login.css"/>
+    <script src="js/login.js"></script>
+	<script type="text/javascript">
+	
+	
+	function  ajaxFunction(){
+	   var xmlHttp;
+	   try{ // Firefox, Opera 8.0+, Safari
+	        xmlHttp=new XMLHttpRequest();
+	    }
+	    catch (e){
+		   try{// Internet Explorer
+		         xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+		      }
+		    catch (e){
+		      try{
+		         xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+		      }
+		      catch (e){}
+		      }
+	    }
+	
+		return xmlHttp;
+	 }
+	 
+	function checkUserName() {
+		
+		//获取输入框的值 document 整个网页
+		var name = document.getElementById("name").value; // value  value() val val()
+		//1. 创建对象
+		var request = ajaxFunction();
+		
+		//2. 发送请求
+		request.open("POST"  ,"/day16/CheckUserNameServlet" , true );
+		
+		//注册状态改变监听，获取服务器传送过来的数据
+		request.onreadystatechange = function(){
+			
+			if(request.readyState == 4 && request.status == 200){
+				//alert(request.responseText);
+				var data = request.responseText;
+				if(data == 1){
+					//alert("用户名已存在");
+					document.getElementById("span01").innerHTML = "<font color='red'>用户名已存在!</font>";
+				}else{
+					document.getElementById("span01").innerHTML = "<font color='green'>用户名可用!</font>";
+					//alert("用户名未存在");
+				}
+			}
+			
+		}
+		
+		request.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		request.send("name="+name);
+	}
+	
+	function loginPost(){
+		
+		var user_name=document.getElementById("usernameId").value;
+		var password=document.getElementById("passwordId").value;
+		var request= ajaxFunction();
+		
+		request.onreadystatechange=function(){
+			if(request.readyState==4 &&(request.status==200||request.status==0)){
+				//alert(request.reponseText);
+				var text=request.reponseText;
+				var resultJson = eval("("+text+")");//把响应内容对象转成javascript对象
+				alert(resultJson);
+				var msg = resultJson.message;//获取json中的result键对应的值  这句出错
+				alert("6666");
+				var code = resultJson.code;//获取json中的code键对应的值
+				
+			}
+		}
+		request.open("POST","http://localhost:1213/Login/Login",true);
+		request.setRequestHeader("Content-type","application/x-www-form-urlencoded");//添加Content-type
+		request.send("user_name="+user_name+"&password="+password);//发送请求参数间用&分割
+	}
+
+</script>
+</head>
+<body onload="show()">
+    <!-- <div id="Layer1" style="position:absolute; width:100%; height:100%; z-index:-1">    
+    <img src="bg.jpg" height="100%" width="100%"/>    
+    </div>    -->
+
+    <!--form  style="margin: auto;" action="loginPost()" method="POST"-->
+	 <!--form  style="margin: auto;" onclick="loginPost()"-->
+        <center>用户登录</center><br/><br/>
+        用户名: <br/> <input type="text" name="user_name" id="usernameId"></input><br/><br/>
+        密码: <br/><input type="password" name="password" id="passwordId"></input>
+        <br/>
+        <br/>
+       <input style="color: #fff;" type="submit" value="login" onclick="loginPost()" ></input>
+       <br/><br/>
+       还没有账号? <a href="register.html" >立即注册</a>
+       <br/>
+       <br/>
+       The time: <p id="time"></p>
+    <!--/form-->
+	
+	<form action="http://localhost:1213/uploadFile" method="POST" enctype="multipart/form-data" Content-Type="application/x-www-form-urlencoded">
+		<label for="file">文件名</label>
+		<input id="file" name="fileName" type="file" />
+		<input type="submit" name="submit" value="提交">
+	</form>
+    
+</body>
+</html>
