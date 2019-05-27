@@ -6,6 +6,7 @@
         <id column="ITEM_ID" property="item_id"/>
         <result column="ITEM_NAME" property="item_name"/>
         <result column="FORM_ID" property="form_id"/>
+        <result column="TYPE" property="type"/>
     </resultMap>
     <select id="getByFormId" parameterType="com.example.demo.entity.WForm" resultMap="baseMap">
         select * from item
@@ -23,8 +24,8 @@
 
 
     <insert id="addItem" parameterType="com.example.demo.entity.WItem" >
-        insert into item(item_id,item_name,form_id)
-        values(#{item_id},#{item_name},#{form_id})
+        insert into item(item_id,item_name,form_id,type)
+        values(#{item_id},#{item_name},#{form_id},#{type})
     </insert>
 
     <delete id="deleteItemByFormId" parameterType="com.example.demo.entity.WForm" >

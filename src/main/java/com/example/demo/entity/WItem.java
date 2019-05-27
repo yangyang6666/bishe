@@ -9,4 +9,5 @@ public class WItem implements Serializable{
     private String item_id;
     private String item_name;
     private String form_id;
+    private String type;
 }

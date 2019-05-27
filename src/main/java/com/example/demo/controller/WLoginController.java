@@ -157,6 +157,16 @@ public class WLoginController {
 //        service.getItemByFormId()
 //    }
 
+    @PostMapping("/getItemsByFormId")
+    @ResponseBody
+    public HttpResult getItems(@RequestBody WForm wForm){
+        List<WItem> items=service.getItemByFormId(wForm);
+        return new HttpResult(200,"获取成功",items);
+    }
+
+
+
+
 
 
 
